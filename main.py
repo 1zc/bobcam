@@ -20,7 +20,7 @@ import configparser
 
 os.system(clear)
 
-print("Checking config files.")
+print("Loading config files.")
 
 initcfg = open('cfg/init.cfg', 'r+')
 
@@ -32,10 +32,17 @@ if initcfg.read(1) == '0':
     initcfg.write('1')
     initcfg.close()
 
+syscfg = 'cfg/sys.ini'
+config = configparser.ConfigParser()
+config.read(syscfg)
+res = config['vid']['res']
+fps = config['vid']['fps']
+
+
 print("Loading resources.")
 import stream
 
 
 print("Starting BobCAM.")
-stream.startstream('640x480', 60)
+stream.startstream(res, fps)
 
