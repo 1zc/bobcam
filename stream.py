@@ -20,11 +20,8 @@ from ws4py.server.wsgirefserver import (
 from ws4py.server.wsgiutils import WebSocketWSGIApplication
 
 ###########################################
-# CONFIGURATION ### TODO: TKAE THIS FROM MAIN
-WIDTH = 640
-HEIGHT = 480
-FRAMERATE = 24
-HTTP_PORT = 8082
+# CONFIGURATION ### TODO: TAKE THIS FROM MAIN
+#HTTP_PORT = 1245
 WS_PORT = 8084
 COLOR = u'#444'
 BGCOLOR = u'#333'
@@ -127,13 +124,14 @@ class BroadcastThread(Thread):
             self.converter.stdout.close()
 
 
-def startstream(cfgfps):
+def startstream(cfgfps, resw, resh, cfgstrmport):
     print('Initializing camera')
     with picamera.PiCamera() as camera:
-        camera.resolution = (WIDTH, HEIGHT)
+        camera.resolution = (resw, resh)
         camera.framerate = cfgfps
+        HTTP_PORT = cfgstrmport
         camera.vflip = VFLIP # flips image rightside up, as needed
-        camera.hflip = HFLIP # flips image left-right, as needed
+        camera.hflip = HFLIP # flips image left-right, as needed     
         sleep(3) # camera warm-up time
         print('Initializing websockets server on port %d' % WS_PORT)
         WebSocketWSGIHandler.http_version = '1.1'

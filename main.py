@@ -44,7 +44,7 @@ if initcfg.read(1) == '0':
     config['sys']['sysname'] = cfgsysname
     config['sys']['locmemo'] = cfglocmemo
     config['sys']['strmport'] = "1245"  # Video stream port, can be asked but probably shouldn't be.
-    # Ask for video settings - todo later (Could be selected from presets)
+    # Ask for video settings - todo later (Could be selected from presets or auto determined)
     config['vid'] = {}
     config['vid']['res'] = "640x480"
     config['vid']['resw'] = "640"
@@ -64,10 +64,12 @@ initcfg.close()
 
 config.read(syscfg)
 cfgres = config['vid']['res']
+resw = int(config['vid']['resw'])
+resh = int(config['vid']['resh'])
+cfgfps = int(config['vid']['fps'])
 rawfps = config['vid']['fps']
 rawstrmport = config['sys']['strmport']
-cfgfps = int(rawfps)
-cfgstrmport = int(rawstrmport)
+cfgstrmport = int(config['sys']['strmport'])
 
 print("Loading resources.")
 import stream
@@ -76,4 +78,4 @@ import stream
 print("Starting BobCAM.\n\n")
 print("Using res= "+cfgres+" | fps= "+rawfps+" ")
 print("Streaming on network port: "+rawstrmport+"\n\n")
-stream.startstream()
+stream.startstream(cfgfps, resw, resh)
