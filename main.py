@@ -78,4 +78,4 @@ import stream
 print("Starting BobCAM.\n\n")
 print("Using res= "+cfgres+" | fps= "+rawfps+" ")
 print("Streaming on network port: "+rawstrmport+"\n\n")
-stream.startstream(cfgfps, resw, resh)
+stream.startstream(cfgfps, resw, resh, cfgstrmport)
