@@ -46,9 +46,9 @@ if initcfg.read(1) == '0':
     config['sys']['strmport'] = "1245"  # Video stream port, can be asked but probably shouldn't be.
     # Ask for video settings - todo later (Could be selected from presets or auto determined)
     config['vid'] = {}
-    config['vid']['res'] = "640x480"
-    config['vid']['resw'] = "640"
-    config['vid']['resh'] = "480"
+    config['vid']['res'] = "1024x768"
+    config['vid']['resw'] = "1024"
+    config['vid']['resh'] = "768"
     config['vid']['fps'] = "24"
     # Default parameters
     config['DEFAULT'] = {}
@@ -64,12 +64,11 @@ initcfg.close()
 
 config.read(syscfg)
 cfgres = config['vid']['res']
-resw = int(config['vid']['resw'])
-resh = int(config['vid']['resh'])
+cfgresw = int(config['vid']['resw'])
+cfgresh = int(config['vid']['resh'])
 cfgfps = int(config['vid']['fps'])
 rawfps = config['vid']['fps']
 rawstrmport = config['sys']['strmport']
-cfgstrmport = int(config['sys']['strmport'])
 
 print("Loading resources.")
 import stream
@@ -78,4 +77,4 @@ import stream
 print("Starting BobCAM.\n\n")
 print("Using res= "+cfgres+" | fps= "+rawfps+" ")
 print("Streaming on network port: "+rawstrmport+"\n\n")
-stream.startstream(cfgfps, resw, resh, cfgstrmport)
+stream.startstream(cfgfps, cfgresw, cfgresh)
